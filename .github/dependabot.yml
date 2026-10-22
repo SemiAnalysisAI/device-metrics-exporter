@@ -11,6 +11,10 @@ updates:
     schedule:
       interval: "daily"
     versioning-strategy: increase
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
     
 
   # ── GitHub Actions: keep workflow action versions current ──────────────────
@@ -26,6 +30,20 @@ updates:
       prefix: "chore"
       include: "scope"
     groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
       github-actions:
         patterns:
           - "*"
+
+  # Go modules: security updates only, grouped into one PR.
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 0
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
